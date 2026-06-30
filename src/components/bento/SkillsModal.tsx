@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import {
   FaReact,
   FaNodeJs,
@@ -20,8 +22,8 @@ import {
   SiFigma,
   SiJira,
   SiOpenai,
-  SiClaude,
 } from 'react-icons/si';
+import { FaRobot } from 'react-icons/fa';
 
 type Props = {
   open: boolean;
@@ -51,8 +53,7 @@ const sections = [
       { icon: FaNodeJs, label: 'Node.js' },
       { icon: SiExpress, label: 'Express' },
       { icon: SiGraphql, label: 'GraphQL' },
-      { icon: SiPostman, label: 'REST APIs' },
-      { icon: SiGraphql, label: 'WebSockets' },
+      { icon: SiPostman, label: 'REST API' },
     ],
   },
   {
@@ -67,56 +68,169 @@ const sections = [
   {
     title: 'AI Tools',
     skills: [
-      { icon: SiOpenai, label: 'ChatGPT' },
-      { icon: SiClaude, label: 'Claude' },
+      {
+        icon: SiOpenai,
+        label: 'ChatGPT',
+      },
+      {
+        icon: FaRobot,
+        label: 'Claude',
+      },
     ],
   },
 ];
 
 function SkillsModal({ open, onClose }: Props) {
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      className="
+        fixed
+        inset-0
+        z-50
+        flex
+        items-center
+        justify-center
+        bg-black/70
+        p-4
+        backdrop-blur-md
+      "
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/10 bg-[#111] p-8"
+        className="
+          w-full
+          max-w-6xl
+          overflow-hidden
+          rounded-[32px]
+          border
+          border-white/10
+          bg-[#101010]
+          shadow-2xl
+        "
       >
-        <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-3xl font-bold">Technical Skills</h2>
+        <div
+          className="
+            flex
+            items-center
+            justify-between
+            border-b
+            border-white/10
+            p-6
+            sm:p-8
+          "
+        >
+          <div>
+            <h2 className="text-2xl font-bold sm:text-4xl">Technical Skills</h2>
+
+            <p className="mt-2 text-sm text-zinc-400 sm:text-base">
+              Technologies and tools I use to build modern web and mobile
+              applications.
+            </p>
+          </div>
 
           <button
             onClick={onClose}
-            className="text-3xl text-zinc-400 hover:text-white"
+            className="
+              flex
+              h-11
+              w-11
+              items-center
+              justify-center
+              rounded-full
+              bg-white/5
+              text-2xl
+              transition
+              hover:bg-white/10
+            "
           >
             ×
           </button>
         </div>
 
-        <div className="space-y-10">
-          {sections.map((section) => (
-            <div key={section.title}>
-              <h3 className="mb-5 text-xl font-semibold text-blue-400">
-                {section.title}
-              </h3>
+        <div
+          className="
+            hide-scrollbar
+    max-h-[75vh]
+    overflow-y-auto
+    p-6
+    sm:p-8
+          "
+        >
+          <div className="grid gap-8 lg:grid-cols-2">
+            {sections.map((section) => (
+              <div key={section.title}>
+                <h3 className="mb-5 text-xl font-semibold text-blue-400">
+                  {section.title}
+                </h3>
 
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                {section.skills.map(({ icon: Icon, label }) => (
-                  <div
-                    key={label}
-                    className="flex items-center gap-3 rounded-2xl bg-white/5 p-4"
-                  >
-                    <Icon className="text-2xl text-blue-400" />
+                <div className="grid grid-cols-2 gap-3">
+                  {section.skills.map(({ icon: Icon, label }) => (
+                    <div
+                      key={label}
+                      className="
+                        group
+                        flex
+                        items-center
+                        gap-3
+                        rounded-2xl
+                        border
+                        border-white/5
+                        bg-white/5
+                        p-4
+                        transition-all
+                        duration-300
+                        hover:border-blue-500/30
+                        hover:bg-blue-500/10
+                      "
+                    >
+                      <Icon
+                        className="
+                          text-2xl
+                          text-zinc-300
+                          transition-colors
+                          group-hover:text-blue-400
+                        "
+                      />
 
-                    <span>{label}</span>
-                  </div>
-                ))}
+                      <span
+                        className="
+                          text-sm
+                          text-zinc-300
+                          transition-colors
+                          group-hover:text-white
+                        "
+                      >
+                        {label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
