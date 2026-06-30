@@ -2,12 +2,7 @@ import BentoCard from './BentoCard';
 
 function AvailabilityCard() {
   return (
-    <BentoCard
-      className="
-        col-span-12
-        lg:col-span-4
-      "
-    >
+    <BentoCard>
       <p className="text-green-400">● Available for work</p>
 
       <p className="mt-6 text-zinc-400">

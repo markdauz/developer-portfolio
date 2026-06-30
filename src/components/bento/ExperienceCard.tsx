@@ -4,9 +4,9 @@ function ExperienceCard() {
   return (
     <BentoCard
       className="
-        col-span-12
-        lg:col-span-6
-      "
+    col-span-12
+    lg:col-span-6
+  "
     >
       <h2 className="text-4xl font-bold">Experience</h2>
 

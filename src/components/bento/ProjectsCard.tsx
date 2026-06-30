@@ -2,11 +2,7 @@ import BentoCard from './BentoCard';
 
 function ProjectsCard() {
   return (
-    <BentoCard
-      className="
-        col-span-12
-      "
-    >
+    <BentoCard className="col-span-12">
       <h2 className="text-4xl font-bold">Featured Projects</h2>
 
       <div className="mt-8 grid gap-8 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">

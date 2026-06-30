@@ -4,19 +4,12 @@ function HeroCard() {
   return (
     <BentoCard
       className="
-        col-span-12
-        lg:col-span-8
-        lg:row-span-3
-      "
+    col-span-12
+    lg:col-span-8
+  "
     >
       <div className="flex flex-col-reverse gap-8 lg:flex-row lg:items-center lg:justify-between">
-        <div
-          className="
-    max-w-xl
-    text-center
-    lg:text-left
-  "
-        >
+        <div className="max-w-xl text-center lg:text-left">
           <span
             className="
               rounded-full
@@ -68,41 +61,11 @@ function HeroCard() {
           </div>
         </div>
 
-        <div
-          className="
-    mx-auto
-    flex
-    h-44
-    w-44
-    shrink-0
-    items-center
-    justify-center
-    rounded-full
-    bg-blue-600/20
-
-    sm:h-56
-    sm:w-56
-
-    lg:mx-0
-    lg:h-72
-    lg:w-72
-  "
-        >
+        <div className="mx-auto flex h-44 w-44 shrink-0 items-center justify-center rounded-full bg-blue-600/20 sm:h-56 sm:w-56 lg:mx-0 lg:h-72 lg:w-72">
           <img
             src="/profile.png"
             alt="Mark Dauz"
-            className="
-    h-40
-    w-40
-    rounded-full
-    object-cover
-
-    sm:h-52
-    sm:w-52
-
-    lg:h-64
-    lg:w-64
-  "
+            className="h-40 w-40 rounded-full object-cover sm:h-52 sm:w-52 lg:h-64 lg:w-64"
           />
         </div>
       </div>
