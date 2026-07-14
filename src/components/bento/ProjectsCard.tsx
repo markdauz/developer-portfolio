@@ -1,31 +1,30 @@
 import BentoCard from './BentoCard';
+import ecommerceImg from '../../assets/ecommerce.jpg';
+import estimatorImg from '../../assets/estimator.png';
 
-import { FaGithub, FaExternalLinkAlt, FaMobileAlt } from 'react-icons/fa';
-
-import { SiNextdotjs } from 'react-icons/si';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const projects = [
   {
-    title: 'BuildWise Estimate',
+    title: 'Building Material Estimator',
     category: 'Mobile App',
     description:
-      'A React Native application that helps contractors and homeowners estimate construction materials and project costs with a fast and intuitive mobile experience.',
+      'A React Native application that helps contractors and homeowners estimate construction materials with a fast and intuitive mobile experience.',
     tech: ['React Native', 'TypeScript'],
-    icon: FaMobileAlt,
+    image: estimatorImg,
     gradient: 'from-blue-600 via-sky-500 to-cyan-500',
     github: 'https://github.com/markdauz/footing-rebar-concrete-estimator-app',
-    demo: '#',
+    demo: '',
   },
   {
-    title: 'NextShop Commerce',
+    title: 'Ecommerce',
     category: 'E-commerce',
     description:
       'A modern e-commerce platform built with Next.js featuring secure PayPal payments, shopping cart, checkout flow, and responsive design.',
     tech: ['Next.js', 'TypeScript', 'PayPal'],
-    icon: SiNextdotjs,
-    gradient: 'from-violet-600 via-purple-500 to-fuchsia-500',
+    image: ecommerceImg,
     github: 'https://github.com/markdauz/ecommerce',
-    demo: '#',
+    demo: 'https://mysandboxshop.vercel.app/',
   },
 ];
 
@@ -44,8 +43,6 @@ function ProjectsCard() {
 
       <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
         {projects.map((project) => {
-          const Icon = project.icon;
-
           return (
             <div
               key={project.title}
@@ -69,35 +66,37 @@ function ProjectsCard() {
             >
               {/* Preview */}
 
-              <div
-                className={`
-                  relative
-                  flex
-                  aspect-[16/9]
-                  items-center
-                  justify-center
-                  bg-gradient-to-br
-                  ${project.gradient}
-                `}
-              >
-                <Icon className="text-5xl text-white/90 transition-transform duration-300 group-hover:scale-110 sm:text-7xl" />
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="
+      h-full
+      w-full
+      object-cover
+      transition-transform
+      duration-500
+      group-hover:scale-105
+    "
+                />
 
+                {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                {/* Category */}
                 <span
                   className="
-                    absolute
-                    right-3
-                    top-3
-                    rounded-full
-                    bg-black/30
-                    px-3
-                    py-1
-                    text-[10px]
-                    font-medium
-                    backdrop-blur
-                    sm:right-5
-                    sm:top-5
-                    sm:text-xs
-                  "
+      absolute
+      top-4
+      right-4
+      rounded-full
+      bg-black/50
+      px-3
+      py-1
+      text-xs
+      font-medium
+      backdrop-blur
+    "
                 >
                   {project.category}
                 </span>
@@ -144,51 +143,51 @@ function ProjectsCard() {
                     target="_blank"
                     rel="noreferrer"
                     className="
-                      inline-flex
-                      flex-1
-                      items-center
-                      justify-center
-                      gap-2
-                      rounded-xl
-                      border
-                      border-white/10
-                      px-4
-                      py-3
-                      text-sm
-                      font-medium
-                      transition-all
-                      hover:bg-white/10
-                    "
+      inline-flex
+      flex-1
+      items-center
+      justify-center
+      gap-2
+      rounded-xl
+      border
+      border-white/10
+      px-4
+      py-3
+      text-sm
+      font-medium
+      transition-all
+      hover:bg-white/10
+    "
                   >
                     <FaGithub />
-
                     <span>GitHub</span>
                   </a>
 
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="
-                      inline-flex
-                      flex-1
-                      items-center
-                      justify-center
-                      gap-2
-                      rounded-xl
-                      bg-blue-600
-                      px-4
-                      py-3
-                      text-sm
-                      font-medium
-                      transition-all
-                      hover:bg-blue-500
-                    "
-                  >
-                    <FaExternalLinkAlt />
-
-                    <span>Live Demo</span>
-                  </a>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="
+        inline-flex
+        flex-1
+        items-center
+        justify-center
+        gap-2
+        rounded-xl
+        bg-blue-600
+        px-4
+        py-3
+        text-sm
+        font-medium
+        transition-all
+        hover:bg-blue-500
+      "
+                    >
+                      <FaExternalLinkAlt />
+                      <span>Live Demo</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
