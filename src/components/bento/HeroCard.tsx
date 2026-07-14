@@ -1,5 +1,5 @@
 import BentoCard from './BentoCard';
-import { FaDownload, FaArrowRight } from 'react-icons/fa';
+import { FaDownload } from 'react-icons/fa';
 import profile from '../../assets/profile.jpg';
 
 function HeroCard() {
