@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import BentoCard from './BentoCard';
 
-//
 function seededRandom(seed: number) {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
@@ -86,7 +85,7 @@ function generateTiles(year: string) {
 
   return { tiles, totalContributions };
 }
-//
+
 function GithubCard() {
   const colors = [
     'bg-zinc-800',
