@@ -2,6 +2,91 @@ import { useMemo, useState } from 'react';
 import { FaGithub } from 'react-icons/fa6';
 import BentoCard from './BentoCard';
 
+//
+function seededRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+const contributionTotals: Record<string, number> = {
+  '2021': 161,
+  '2022': 629,
+  '2023': 612,
+  '2024': 513,
+  '2025': 623,
+  '2026': 15,
+};
+
+function generateTiles(year: string) {
+  let seed = Number(year);
+
+  const random = () => {
+    seed += 1;
+    return seededRandom(seed);
+  };
+
+  const totalContributions = contributionTotals[year];
+
+  let remaining = totalContributions;
+
+  const tiles = Array.from({ length: 53 * 7 }, () => ({
+    count: 0,
+    colorIndex: 0,
+  }));
+
+  const activeDays = Math.min(remaining, Math.floor(remaining / 2) + 20);
+
+  const usedIndexes = new Set<number>();
+
+  while (usedIndexes.size < activeDays && remaining > 0) {
+    const index = Math.floor(random() * tiles.length);
+
+    if (usedIndexes.has(index)) {
+      continue;
+    }
+
+    usedIndexes.add(index);
+
+    const maxContribution = Math.min(remaining, Math.floor(random() * 10) + 1);
+
+    tiles[index].count = maxContribution;
+
+    remaining -= maxContribution;
+  }
+
+  if (remaining > 0) {
+    while (remaining > 0) {
+      const index = Math.floor(random() * tiles.length);
+
+      const amount = Math.min(remaining, Math.floor(random() * 5) + 1);
+
+      tiles[index].count += amount;
+
+      remaining -= amount;
+    }
+  }
+
+  tiles.forEach((tile) => {
+    const count = tile.count;
+
+    if (count === 0) {
+      tile.colorIndex = 0;
+    } else if (count <= 3) {
+      tile.colorIndex = 1;
+    } else if (count <= 7) {
+      tile.colorIndex = 2;
+    } else if (count <= 12) {
+      tile.colorIndex = 3;
+    } else if (count <= 20) {
+      tile.colorIndex = 4;
+    } else {
+      tile.colorIndex = 5;
+    }
+  });
+
+  return { tiles, totalContributions };
+}
+//
 function GithubCard() {
   const colors = [
     'bg-zinc-800',
@@ -31,83 +116,10 @@ function GithubCard() {
     { month: 'Dec', week: 48 },
   ];
 
-  const contributionTotals: Record<string, number> = {
-    '2021': 161,
-    '2022': 629,
-    '2023': 612,
-    '2024': 513,
-    '2025': 623,
-    '2026': 14,
-  };
-
-  const { tiles, totalContributions } = useMemo(() => {
-    const totalContributions = contributionTotals[selectedYear];
-
-    let remaining = totalContributions;
-
-    const tiles = Array.from({ length: 53 * 7 }, () => ({
-      count: 0,
-      colorIndex: 0,
-    }));
-
-    const activeDays = Math.min(remaining, Math.floor(remaining / 2) + 20);
-
-    const usedIndexes = new Set<number>();
-
-    while (usedIndexes.size < activeDays && remaining > 0) {
-      const index = Math.floor(Math.random() * tiles.length);
-
-      if (usedIndexes.has(index)) {
-        continue;
-      }
-
-      usedIndexes.add(index);
-
-      const maxContribution = Math.min(
-        remaining,
-        Math.floor(Math.random() * 10) + 1,
-      );
-
-      tiles[index].count = maxContribution;
-
-      remaining -= maxContribution;
-    }
-
-    if (remaining > 0) {
-      while (remaining > 0) {
-        const index = Math.floor(Math.random() * tiles.length);
-
-        const amount = Math.min(remaining, Math.floor(Math.random() * 5) + 1);
-
-        tiles[index].count += amount;
-
-        remaining -= amount;
-      }
-    }
-
-    tiles.forEach((tile) => {
-      const count = tile.count;
-
-      if (count === 0) {
-        tile.colorIndex = 0;
-      } else if (count <= 3) {
-        tile.colorIndex = 1;
-      } else if (count <= 7) {
-        tile.colorIndex = 2;
-      } else if (count <= 12) {
-        tile.colorIndex = 3;
-      } else if (count <= 20) {
-        tile.colorIndex = 4;
-      } else {
-        tile.colorIndex = 5;
-      }
-    });
-
-    return {
-      tiles,
-      totalContributions,
-    };
-  }, [selectedYear]);
+  const { tiles, totalContributions } = useMemo(
+    () => generateTiles(selectedYear),
+    [selectedYear],
+  );
 
   return (
     <BentoCard className="col-span-12">
